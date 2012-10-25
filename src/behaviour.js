@@ -6,8 +6,8 @@ var Behaviour = function (name, obj) {
 Behaviour.prototype = {
     init: function () {
         // Find elements with this behaviour and instantiate `BehaviourElem` objects.
-        this.findElem(this.name).each($.proxy(function (index, $elem) {
-            new BehaviourElem($elem, this.obj);
+        this.findElem(this.name).each($.proxy(function (index, elem) {
+            new BehaviourElem($(elem), this.obj);
         }, this));
     },
     
@@ -53,26 +53,26 @@ BehaviourElem.prototype = {
 
 
 
-var behaviour = {};
-
-behaviour.init = function () {
-    // Initialise an array to store all behaviours.
-    this.behaviours = [];
+var behaviour = {
+    init: function () {
+        // Initialise an array to store all behaviours.
+        this.behaviours = [];
     
-    $(document).on("ready jsContentLoaded", $.proxy(function (e) {
-        this.currentEvent = e;
-        this.run();
-    }, this));
-};
+        $(document).on("ready jsContentLoaded", $.proxy(function (e) {
+            this.currentEvent = e;
+            this.run();
+        }, this));
+    },
 
-behaviour.run = function () {
-    $.each(this.behaviours, function (index, behaviour) {
-        behaviour.init();
-    });
-};
+    run: function () {
+        $.each(this.behaviours, function (index, behaviour) {
+            behaviour.init();
+        });
+    },
 
-behaviour.add = function (name, obj) {
-    this.behaviours.push(new Behaviour(name, obj));
+    add: function (name, obj) {
+        this.behaviours.push(new Behaviour(name, obj));
+    }
 };
 
 behaviour.init();
