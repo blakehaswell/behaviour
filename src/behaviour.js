@@ -15,8 +15,14 @@ Behaviour.prototype = {
     }
 };
 
+
+
 // Initialise an array to store all behaviours.
 Behaviour.behaviours = [];
+
+Behaviour.add = function (name, obj) {
+    this.behaviours.push(new Behaviour(name, obj));
+};
 
 Behaviour.run = function () {
     $.each(this.behaviours, function (index, behaviour) {
@@ -24,9 +30,7 @@ Behaviour.run = function () {
     });
 };
 
-Behaviour.add = function (name, obj) {
-    this.behaviours.push(new Behaviour(name, obj));
-};
+
 
 $(document).on("ready jsContentLoaded", function (e) {
     Behaviour.currentEvent = e;
