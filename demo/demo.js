@@ -1,4 +1,4 @@
-behaviour.add("demo", {
+Behaviour.add("demo", {
     init: function () {
         this.$elem.css("background-color", "#00f");
     },

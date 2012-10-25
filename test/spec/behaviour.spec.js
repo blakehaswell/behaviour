@@ -5,20 +5,20 @@ describe("Behaviour", function () {
         var behaviourArrayLength;
         
         beforeEach(function () {
-            behaviourArrayLength = behaviour.behaviours.length;
+            behaviourArrayLength = Behaviour.behaviours.length;
         });
         
         it("Adds an item to the behaviours array", function () {
-            behaviour.add("testBehaviour1", {});
+            Behaviour.add("testBehaviour1", {});
             
-            expect(behaviour.behaviours.length).toEqual(behaviourArrayLength + 1);
+            expect(Behaviour.behaviours.length).toEqual(behaviourArrayLength + 1);
         });
         
         it("Adds Behaviour objects to the behaviours array", function () {
-            behaviour.add("testBehaviour2", {});
+            Behaviour.add("testBehaviour2", {});
             
-            expect(behaviour.behaviours[behaviourArrayLength].name).toEqual("testBehaviour2");
-            expect(behaviour.behaviours[behaviourArrayLength].obj).toEqual({});
+            expect(Behaviour.behaviours[behaviourArrayLength].name).toEqual("testBehaviour2");
+            expect(Behaviour.behaviours[behaviourArrayLength].obj).toEqual({});
         });
         
     });
@@ -34,7 +34,7 @@ describe("Behaviour", function () {
             it("Runs on jsContentLoaded", function () {
                 var initFn = sinon.spy();
                 
-                behaviour.add("initTest", {
+                Behaviour.add("initTest", {
                     init: initFn
                 });
                 

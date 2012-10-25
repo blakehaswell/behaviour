@@ -5,74 +5,30 @@ var Behaviour = function (name, obj) {
 
 Behaviour.prototype = {
     init: function () {
-        // Find elements with this behaviour and instantiate `BehaviourElem` objects.
-        this.findElem(this.name).each($.proxy(function (index, elem) {
+        this.findElems().each($.proxy(function (index, elem) {
             new BehaviourElem($(elem), this.obj);
         }, this));
     },
     
-    findElem: function (name) {
-        return $(behaviour.currentEvent.target).find("[data-behaviour~='" + name + "']");
+    findElems: function () {
+        return $(Behaviour.currentEvent.target).find("[data-behaviour~='" + this.name + "']");
     }
 };
 
+// Initialise an array to store all behaviours.
+Behaviour.behaviours = [];
 
-
-
-
-var BehaviourElem = function ($elem, obj) {
-    this.obj = $.extend({}, obj);
-    this.obj.$elem = $elem;
-    this.bindEvents();
-    this.init();
+Behaviour.run = function () {
+    $.each(this.behaviours, function (index, behaviour) {
+        behaviour.init();
+    });
 };
 
-BehaviourElem.prototype = {
-    bindEvents: function () {
-        if (this.obj.events !== undefined) {
-            $.each(this.obj.events, $.proxy(this.bindEvent, this));
-        }
-    },
-    
-    bindEvent: function (event, fn) {
-        // When the event is triggered we create a reference to the event, then call the function.
-        this.obj.$elem.on(event, $.proxy(function (event) {
-            this.obj.event = event;
-            fn.call(this.obj);
-        }, this));
-    },
-    
-    init: function () {
-        if (this.obj.init !== undefined) {
-            this.obj.init.call(this.obj);
-        }
-    }
+Behaviour.add = function (name, obj) {
+    this.behaviours.push(new Behaviour(name, obj));
 };
 
-
-
-
-
-var behaviour = {
-    init: function () {
-        // Initialise an array to store all behaviours.
-        this.behaviours = [];
-    
-        $(document).on("ready jsContentLoaded", $.proxy(function (e) {
-            this.currentEvent = e;
-            this.run();
-        }, this));
-    },
-
-    run: function () {
-        $.each(this.behaviours, function (index, behaviour) {
-            behaviour.init();
-        });
-    },
-
-    add: function (name, obj) {
-        this.behaviours.push(new Behaviour(name, obj));
-    }
-};
-
-behaviour.init();
+$(document).on("ready jsContentLoaded", function (e) {
+    Behaviour.currentEvent = e;
+    Behaviour.run();
+});
