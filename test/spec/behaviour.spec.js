@@ -27,7 +27,7 @@ describe("Behaviour", function () {
         
         describe("The `init` method", function  () {
             
-            it("Runs on document ready", function () {
+            xit("Runs on document ready", function () {
                 // Document ready has already run. Not sure how to test this...
             });
             
@@ -43,11 +43,11 @@ describe("Behaviour", function () {
                 expect(initFn.calledOnce).toBeTruthy();
             });
             
-            it("Runs with the correct context", function () {});
+            xit("Runs with the correct context", function () {});
             
         });
         
-        describe("The `events` object", function () {
+        xdescribe("The `events` object", function () {
             
             it("runs the assigned method when the event is triggered on the element", function () {});
             
