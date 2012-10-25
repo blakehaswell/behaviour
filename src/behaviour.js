@@ -30,7 +30,7 @@ var BehaviourElem = function ($elem, obj) {
 BehaviourElem.prototype = {
     bindEvents: function () {
         if (this.obj.events !== undefined) {
-            $.each(this.obj.events, $.proxy(this.bindEvent(event, fn), this));
+            $.each(this.obj.events, $.proxy(this.bindEvent, this));
         }
     },
     
